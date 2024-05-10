@@ -1,32 +1,30 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
+import utils.TestData;
 
-public class TextBoxTests extends TextBoxPage {
+public class TextBoxTests extends TestBase {
     TextBoxPage textBoxPage = new TextBoxPage();
+    TestData testData = new TestData();
 
-    @BeforeAll
-    static void settingsBeforeAll() {
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl = "https://demoqa.com/";
+    @BeforeEach
+    void prepareTestData() {
+        testData.prepareTextBoxTestData();
     }
-
     @Test
     void checkTextBoxFormAllFieldsTest() {
         textBoxPage.openPage()
-                .setFullName("Petr Petrov")
-                .setUserEmail("petr.petrov@mail.ru")
-                .setCurrentAddress("Test current address")
-                .setPermanentAddress("Test permanent address")
+                .setFullName(testData.fullName)
+                .setUserEmail(testData.userEmail)
+                .setCurrentAddress(testData.currentAddress)
+                .setPermanentAddress(testData.permanentAddress)
                 .submit();
 
-        textBoxPage.checkResult("Name", "Petr Petrov")
-                .checkResult("Email", "petr.petrov@mail.ru")
-                .checkResult("Current Address", "Test current address")
-                .checkResult("Permananet Address", "Test permanent address");
+        textBoxPage.checkResult("Name", testData.fullName)
+                .checkResult("Email", testData.userEmail)
+                .checkResult("Current Address", testData.currentAddress)
+                .checkResult("Permananet Address", testData.permanentAddress);
     }
 }

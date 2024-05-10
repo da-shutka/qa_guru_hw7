@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
-public class TextBoxPage {
+public class TextBoxPage extends TestBasePage {
     private final SelenideElement fullNameInput = $("#userName"),
             userEmailInput = $("#userEmail"),
             currentAddressInput = $("#currentAddress"),
@@ -18,8 +18,7 @@ public class TextBoxPage {
     public TextBoxPage openPage() {
         open("text-box");
         $("h1").shouldHave(text("Text Box"));
-        executeJavaScript("$('footer').remove();");
-        executeJavaScript("$('#fixedban').remove();");
+        this.removeBanners();
         return this;
     }
 

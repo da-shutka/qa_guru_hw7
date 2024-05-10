@@ -1,69 +1,74 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
+import utils.TestData;
 
-public class RegistrationFormTests extends RegistrationPage {
+public class RegistrationFormTests extends TestBase {
 
     RegistrationPage registrationPage = new RegistrationPage();
+    TestData testData = new TestData();
 
-    @BeforeAll
-    static void settingsBeforeAll() {
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl = "https://demoqa.com/";
+    @BeforeEach
+    void prepareTestData() {
+        testData.prepareRegistrationTestData();
     }
     
     @Test
     void checkRegistrationFormAllFieldsTest() {
-        String[] subjects = {"Accounting", "Biology"};
-        String[] hobbies = {"Sports", "Music"};
-
         registrationPage.openPage()
-                .setFirstName("Anna")
-                .setLastName("Ivanova")
-                .setUserEmail("anna.ivanova@mail.ru")
-                .setGender("Female")
-                .setUserNumber("9231552110")
-                .setDateOfBirth("9", "September", "1991")
-                .setSubjectsInput(subjects)
-                .setHobbies(hobbies)
-                .uploadPicture("src/test/resources/comma.jpg")
-                .setCurrentAddress("Test address")
-                .setState("Rajasthan")
-                .setCity("Jaiselmer")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setUserEmail(testData.userEmail)
+                .setGender(testData.gender)
+                .setUserNumber(testData.phoneNumber)
+                .setDateOfBirth(testData.birthDay)
+                .setSubjectsInput(testData.subjects)
+                .setHobbies(testData.hobbies)
+                .uploadPicture(testData.file)
+                .setCurrentAddress(testData.currentAddress)
+                .setState(testData.state)
+                .setCity(testData.city)
                 .submit();
 
         registrationPage.checkSuccessfulSubmit()
-                .checkResult("Student Name", "Anna Ivanova")
-                .checkResult("Student Email", "anna.ivanova@mail.ru")
-                .checkResult("Gender", "Female")
-                .checkResult("Mobile", "9231552110")
-                .checkResult("Date of Birth", "09 September,1991")
-                .checkResult("Subjects", "Accounting, Biology")
-                .checkResult("Hobbies", "Sports, Music")
-                .checkResult("Picture", "comma.jpg")
-                .checkResult("Address", "Test address")
-                .checkResult("State and City", "Rajasthan Jaiselmer");
+                .checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Student Email", testData.userEmail)
+                .checkResult("Gender", testData.gender)
+                .checkResult("Mobile", testData.phoneNumber)
+                .checkResult("Date of Birth", String.format(
+                        "%s %s,%s",
+                        testData.birthDay.getFirst(),
+                        testData.birthDay.get(1),
+                        testData.birthDay.getLast()))
+                .checkResult("Subjects", String.join(", ", testData.subjects))
+                .checkResult("Hobbies", String.join(", ", testData.hobbies))
+                .checkResult("Picture", testData.file)
+                .checkResult("Address", testData.currentAddress)
+                .checkResult("State and City", testData.state + " " + testData.city);
     }
 
     @Test
     void checkRegistrationFormMandatoryFieldsTest(){
         registrationPage.openPage()
-                .setFirstName("Ivan")
-                .setLastName("Petrov")
-                .setGender("Male")
-                .setUserNumber("1234567890")
-                .setDateOfBirth("18", "July", "2000")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setGender(testData.gender)
+                .setUserNumber(testData.phoneNumber)
+                .setDateOfBirth(testData.birthDay)
                 .submit();
 
         registrationPage.checkSuccessfulSubmit()
-                .checkResult("Student Name", "Ivan Petrov")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "1234567890")
-                .checkResult("Date of Birth", "18 July,2000");
+                .checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Gender", testData.gender)
+                .checkResult("Mobile", testData.phoneNumber)
+                .checkResult("Date of Birth", String.format(
+                        "%s %s,%s",
+                        testData.birthDay.getFirst(),
+                        testData.birthDay.get(1),
+                        testData.birthDay.getLast()))
+        ;
     }
 
     @Test

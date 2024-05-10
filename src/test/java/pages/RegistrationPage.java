@@ -5,14 +5,14 @@ import pages.components.CalendarComponent;
 import pages.components.TableResultComponent;
 
 import java.io.File;
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.hidden;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
 
-public class RegistrationPage {
+public class RegistrationPage extends TestBasePage {
     private final SelenideElement firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
             userEmailInput = $("#userEmail"),
@@ -26,7 +26,7 @@ public class RegistrationPage {
             stateInput = $("#state input"),
             cityInput = $("#city input"),
             submittedForm = $("#example-modal-sizes-title-lg")
-    ;
+                    ;
 
     CalendarComponent calendarComponent = new CalendarComponent();
     TableResultComponent modal = new TableResultComponent();
@@ -34,8 +34,7 @@ public class RegistrationPage {
     public RegistrationPage openPage() {
         open("automation-practice-form");
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
-        executeJavaScript("$('footer').remove();");
-        executeJavaScript("$('#fixedban').remove();");
+        this.removeBanners();
         return this;
     }
 
@@ -64,20 +63,20 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setDateOfBirth(String day, String month, String year){
+    public RegistrationPage setDateOfBirth(List<String> birthDay){
         calendarInput.click();
-        calendarComponent.setDate(day, month, year);
+        calendarComponent.setDate(birthDay.getFirst(), birthDay.get(1), birthDay.getLast());
         return this;
     }
 
-    public RegistrationPage setSubjectsInput(String[] subjects) {
+    public RegistrationPage setSubjectsInput(List<String> subjects) {
         for (String subject : subjects) {
             subjectsInput.setValue(subject).pressEnter();
         }
         return this;
     }
 
-    public RegistrationPage setHobbies(String[] hobbies){
+    public RegistrationPage setHobbies(List<String>  hobbies){
         for (String hobby: hobbies) {
             hobbiesInput.$$("label").filterBy(text(hobby)).first().click();
         }
@@ -85,7 +84,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage uploadPicture(String path){
-        uploadPictureInput.uploadFile(new File(path));
+        uploadPictureInput.uploadFile(new File("src/test/resources/" + path));
         return this;
     }
 
