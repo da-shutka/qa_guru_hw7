@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class TableResultComponent {
+
     private final SelenideElement table = $(".table-responsive");
 
     public void checkTableRow(String key, String value) {

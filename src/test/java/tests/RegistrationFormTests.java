@@ -1,6 +1,5 @@
 package tests;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import utils.TestData;
@@ -10,11 +9,6 @@ public class RegistrationFormTests extends TestBase {
     RegistrationPage registrationPage = new RegistrationPage();
     TestData testData = new TestData();
 
-    @BeforeEach
-    void prepareTestData() {
-        testData.prepareRegistrationTestData();
-    }
-    
     @Test
     void checkRegistrationFormAllFieldsTest() {
         registrationPage.openPage()
@@ -24,8 +18,8 @@ public class RegistrationFormTests extends TestBase {
                 .setGender(testData.gender)
                 .setUserNumber(testData.phoneNumber)
                 .setDateOfBirth(testData.birthDay)
-                .setSubjectsInput(testData.subjects)
-                .setHobbies(testData.hobbies)
+                .setSubjectsInput(testData.subject)
+                .setHobbies(testData.hobby)
                 .uploadPicture(testData.file)
                 .setCurrentAddress(testData.currentAddress)
                 .setState(testData.state)
@@ -42,15 +36,15 @@ public class RegistrationFormTests extends TestBase {
                         testData.birthDay.getFirst(),
                         testData.birthDay.get(1),
                         testData.birthDay.getLast()))
-                .checkResult("Subjects", String.join(", ", testData.subjects))
-                .checkResult("Hobbies", String.join(", ", testData.hobbies))
+                .checkResult("Subjects", testData.subject)
+                .checkResult("Hobbies", testData.hobby)
                 .checkResult("Picture", testData.file)
                 .checkResult("Address", testData.currentAddress)
                 .checkResult("State and City", testData.state + " " + testData.city);
     }
 
     @Test
-    void checkRegistrationFormMandatoryFieldsTest(){
+    void checkRegistrationFormMandatoryFieldsTest() {
         registrationPage.openPage()
                 .setFirstName(testData.firstName)
                 .setLastName(testData.lastName)
@@ -67,8 +61,7 @@ public class RegistrationFormTests extends TestBase {
                         "%s %s,%s",
                         testData.birthDay.getFirst(),
                         testData.birthDay.get(1),
-                        testData.birthDay.getLast()))
-        ;
+                        testData.birthDay.getLast()));
     }
 
     @Test

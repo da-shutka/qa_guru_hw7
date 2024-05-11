@@ -1,5 +1,6 @@
 package utils;
 
+import com.github.javafaker.Faker;
 import com.google.common.collect.Lists;
 
 import java.text.Format;
@@ -10,12 +11,82 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomUtils {
+
+    public static String[] subjects = {"Accounting",
+            "Arts",
+            "Biology",
+            "Chemistry",
+            "Civics",
+            "Computer Science",
+            "Commerce",
+            "Economics",
+            "English",
+            "Hindi",
+            "History",
+            "Maths",
+            "Physics",
+            "Social Studies"};
+
+    public static String[] hobbies = {"Sports",
+            "Reading",
+            "Music"};
+
+    public static String getRandomFirstName() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.name().firstName();
+    }
+
+    public static String getRandomLastName() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.name().lastName();
+    }
+
+    public static String getRandomFullName() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.name().fullName();
+    }
+
+    public static String getRandomUserEmail() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.internet().emailAddress();
+    }
+
+    public static String getRandomGender() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.demographic().sex();
+    }
+
+    public static String getRandomPhoneNumber() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.number().digits(10);
+    }
+
+    public static String getRandomFile() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.options().option("comma.jpg", "flower.png");
+    }
+
+    public static String getRandomFullAddress() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.address().fullAddress();
+    }
+
+    public static String getRandomState() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
+    }
+
+    public static List<String> getRandomBirthDay() {
+        Faker faker = new Faker(new Locale("en"));
+        return getRandomDate(faker.date().birthday());
+    }
+
     public static List<String> getRandomDate(Date date) {
         List<String> dayMonthYear = new ArrayList<String>();
 
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String day = String.valueOf(localDate.getDayOfMonth());
-        
+
         Format f = new SimpleDateFormat("MMMM", Locale.ENGLISH);
         String month = f.format(date);
 
@@ -28,29 +99,15 @@ public class RandomUtils {
 
         return dayMonthYear;
     }
-    public static List<String> getRandomSubjects() {
-        List<String> subjects = Lists.newArrayList("Accounting",
-                "Arts",
-                "Biology",
-                "Chemistry",
-                "Civics",
-                "Computer Science",
-                "Commerce",
-                "Economics",
-                "English",
-                "Hindi",
-                "History",
-                "Maths",
-                "Physics",
-                "Social Studies");
-        return getRandomItemsFromArray(subjects);
+
+    public static String getRandomSubject() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.options().option(subjects);
     }
 
-    public static List<String> getRandomHobbies() {
-        List<String> hobbies = Lists.newArrayList("Sports",
-                "Reading",
-                "Music");
-        return getRandomItemsFromArray(hobbies);
+    public static String getRandomHobby() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.options().option(hobbies);
     }
 
     public static String getRandomCityBasedOnState(String state) {
@@ -60,7 +117,7 @@ public class RandomUtils {
         List<String> citiesRajasthan = Lists.newArrayList("Jaipur", "Jaiselmer");
         List<String> target = new ArrayList<>();
 
-        switch(state){
+        switch (state) {
             case "NCR":
                 target.addAll(citiesNCR);
                 break;
@@ -84,17 +141,5 @@ public class RandomUtils {
     public static String getRandomItemFromList(List<String> array) {
         int index = getRandomInt(0, array.size() - 1);
         return array.get(index);
-    }
-    public static List<String> getRandomItemsFromArray(List<String> array) {
-        int numberOfElements = getRandomInt(1, array.size());
-        List<String> resList = new ArrayList<>();
-
-        for(int i=0; i < numberOfElements; i++) {
-            int randomIndex = getRandomInt(0, array.size() - 1);
-            String randomElement = array.get(randomIndex);
-            array.remove(randomIndex);
-            resList.add(i,randomElement);
-        }
-        return resList;
     }
 }

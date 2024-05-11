@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class OutputComponent {
+
     private final SelenideElement output = $("#output");
 
     public void checkOutputRow(String key, String value) {

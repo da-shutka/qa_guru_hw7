@@ -7,7 +7,9 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class TextBoxPage extends BasePage {
-    private final SelenideElement fullNameInput = $("#userName"),
+
+    private final SelenideElement
+            fullNameInput = $("#userName"),
             userEmailInput = $("#userEmail"),
             currentAddressInput = $("#currentAddress"),
             permanentAddressInput = $("#permanentAddress");
@@ -41,7 +43,7 @@ public class TextBoxPage extends BasePage {
         return this;
     }
 
-    public void submit(){
+    public void submit() {
         $("#submit").click();
     }
 

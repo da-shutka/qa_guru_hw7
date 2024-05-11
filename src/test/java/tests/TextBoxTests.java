@@ -1,18 +1,14 @@
 package tests;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 import utils.TestData;
 
 public class TextBoxTests extends TestBase {
+
     TextBoxPage textBoxPage = new TextBoxPage();
     TestData testData = new TestData();
 
-    @BeforeEach
-    void prepareTestData() {
-        testData.prepareTextBoxTestData();
-    }
     @Test
     void checkTextBoxFormAllFieldsTest() {
         textBoxPage.openPage()
