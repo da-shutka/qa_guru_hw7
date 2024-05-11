@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class RegistrationPage extends TestBasePage {
+public class RegistrationPage extends BasePage {
     private final SelenideElement firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
             userEmailInput = $("#userEmail"),
@@ -83,8 +83,8 @@ public class RegistrationPage extends TestBasePage {
         return this;
     }
 
-    public RegistrationPage uploadPicture(String path){
-        uploadPictureInput.uploadFile(new File("src/test/resources/" + path));
+    public RegistrationPage uploadPicture(String fileName){
+        uploadPictureInput.uploadFromClasspath(fileName);
         return this;
     }
 

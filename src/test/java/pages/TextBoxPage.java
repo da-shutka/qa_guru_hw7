@@ -5,9 +5,8 @@ import pages.components.OutputComponent;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
 
-public class TextBoxPage extends TestBasePage {
+public class TextBoxPage extends BasePage {
     private final SelenideElement fullNameInput = $("#userName"),
             userEmailInput = $("#userEmail"),
             currentAddressInput = $("#currentAddress"),
