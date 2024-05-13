@@ -32,53 +32,43 @@ public class RandomUtils {
             "Music"};
 
     public static String getRandomFirstName() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.name().firstName();
+        return new Faker().name().firstName();
     }
 
     public static String getRandomLastName() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.name().lastName();
+        return new Faker().name().lastName();
     }
 
     public static String getRandomFullName() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.name().fullName();
+        return new Faker().name().fullName();
     }
 
     public static String getRandomUserEmail() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.internet().emailAddress();
+        return new Faker().internet().emailAddress();
     }
 
     public static String getRandomGender() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.demographic().sex();
+        return new Faker().demographic().sex();
     }
 
     public static String getRandomPhoneNumber() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.number().digits(10);
+        return new Faker().number().digits(10);
     }
 
     public static String getRandomFile() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.options().option("comma.jpg", "flower.png");
+        return new Faker().options().option("comma.jpg", "flower.png");
     }
 
     public static String getRandomFullAddress() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.address().fullAddress();
+        return new Faker().address().fullAddress();
     }
 
     public static String getRandomState() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
+        return new Faker().options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
     }
 
     public static List<String> getRandomBirthDay() {
-        Faker faker = new Faker(new Locale("en"));
-        return getRandomDate(faker.date().birthday());
+        return getRandomDate(new Faker().date().birthday());
     }
 
     public static List<String> getRandomDate(Date date) {
@@ -101,13 +91,11 @@ public class RandomUtils {
     }
 
     public static String getRandomSubject() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.options().option(subjects);
+        return new Faker().options().option(subjects);
     }
 
     public static String getRandomHobby() {
-        Faker faker = new Faker(new Locale("en"));
-        return faker.options().option(hobbies);
+        return new Faker().options().option(hobbies);
     }
 
     public static String getRandomCityBasedOnState(String state) {

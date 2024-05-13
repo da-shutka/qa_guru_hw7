@@ -1,9 +1,6 @@
 package utils;
 
-import com.github.javafaker.Faker;
-
 import java.util.List;
-import java.util.Locale;
 
 import static utils.RandomUtils.*;
 import static utils.RandomUtils.getRandomCityBasedOnState;
